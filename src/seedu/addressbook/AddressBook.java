@@ -383,6 +383,8 @@ public class AddressBook {
                 return executeClearAddressBook();
             case COMMAND_HELP_WORD:
                 return getUsageInfoForAllCommands();
+            case COMMAND_SWAP_NUMBER:
+                return sortPersonBasedOnNumber();
             case COMMAND_EXIT_WORD:
                 executeExitProgramRequest();
             default:
@@ -787,7 +789,7 @@ public class AddressBook {
     /*
      * Sorting method based on the Number of person
      */
-    private static void sortPersonBasedOnNumber(ArrayList<String[]> ALL_PERSONS){
+    private static String sortPersonBasedOnNumber(ArrayList<String[]> ALL_PERSONS){
         for (int i= 0; i< ALL_PERSONS.length; i++){
             for (int j=0 ; j< ALL_PERSONS.length - 1; j++){
                 if (Integer.getPhoneFromPerson(ALL_PERSONS.get(j)) > Integer.getPhoneFromPerson(ALL_PERSONS.get(j+1))){
@@ -798,6 +800,7 @@ public class AddressBook {
                 }
             }
         }
+        return executeListAllPersonsInAddressBook();
     }
 
     /*
@@ -823,11 +826,11 @@ public class AddressBook {
      * @return true if the given person was found and deleted in the model
      */
     private static boolean deletePersonFromAddressBook(String[] exactPerson) {
-        final boolean changed = ALL_PERSONS.remove(exactPerson);
-        if (changed) {
+        final boolean isChanged = ALL_PERSONS.remove(exactPerson);
+        if (isChanged) {
             savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
         }
-        return changed;
+        return isChanged;
     }
 
     /**
