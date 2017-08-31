@@ -130,6 +130,10 @@ public class AddressBook {
     private static final String COMMAND_HELP_DESC = "Shows program usage instructions.";
     private static final String COMMAND_HELP_EXAMPLE = COMMAND_HELP_WORD;
 
+    private static final String COMMAND_SORT_NUMBER = "sort";
+    private static final String COMMAND_SORT_DESC = "Sort people based on number.";
+    private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_NUMBER;
+
     private static final String COMMAND_EXIT_WORD = "exit";
     private static final String COMMAND_EXIT_DESC = "Exits the program.";
     private static final String COMMAND_EXIT_EXAMPLE = COMMAND_EXIT_WORD;
@@ -383,7 +387,7 @@ public class AddressBook {
                 return executeClearAddressBook();
             case COMMAND_HELP_WORD:
                 return getUsageInfoForAllCommands();
-            case COMMAND_SWAP_NUMBER:
+            case COMMAND_SORT_NUMBER:
                 return sortPersonBasedOnNumber();
             case COMMAND_EXIT_WORD:
                 executeExitProgramRequest();
@@ -628,18 +632,6 @@ public class AddressBook {
         }
     }
 
-    /*
-     * Shows a message to the user without the use of Varargs
-     * Takes in input of arraylist of String messages
-     */
-    private static void showToUserWithoutVarargs(ArrayList<String> message){
-        for (String m: message){
-            for (String word: m){
-                System.out.println(LINE_PREFIX + word);
-            }
-        }
-    }
-
     /**
      * Shows the list of persons to the user.
      * The list will be indexed, starting from 1.
@@ -789,14 +781,16 @@ public class AddressBook {
     /*
      * Sorting method based on the Number of person
      */
-    private static String sortPersonBasedOnNumber(ArrayList<String[]> ALL_PERSONS){
-        for (int i= 0; i< ALL_PERSONS.length; i++){
-            for (int j=0 ; j< ALL_PERSONS.length - 1; j++){
-                if (Integer.getPhoneFromPerson(ALL_PERSONS.get(j)) > Integer.getPhoneFromPerson(ALL_PERSONS.get(j+1))){
+    private static String sortPersonBasedOnNumber(){
+        for (int i= 0; i< ALL_PERSONS.size(); i++){
+            for (int j=0 ; j< ALL_PERSONS.size() - 1; j++){
+                int num1 = Integer.parseInt(getPhoneFromPerson(ALL_PERSONS.get(j)));
+                int num2 = Integer.parseInt((getPhoneFromPerson(ALL_PERSONS.get(j+1))));
+                if (num1 > num2){
                     String[] biggerNumber = ALL_PERSONS.get(j);
                     String[] smallerNumber = ALL_PERSONS.get(j+1);
                     ALL_PERSONS.set(j,smallerNumber);
-                    ALL_PERSONS.set(j+1,largerNumber);
+                    ALL_PERSONS.set(j+1,biggerNumber);
                 }
             }
         }
@@ -853,7 +847,7 @@ public class AddressBook {
      *
      * @param persons list of persons to initialise the model with
      */
-    private static void initialiseAddressBookModel(Arr1ayList<String[]> persons) {
+    private static void initialiseAddressBookModel(ArrayList<String[]> persons) {
         ALL_PERSONS.clear();
         ALL_PERSONS.addAll(persons);
     }
