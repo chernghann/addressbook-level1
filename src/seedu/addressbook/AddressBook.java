@@ -133,6 +133,10 @@ public class AddressBook {
     private static final String COMMAND_SORT_DESC = "Sort people based on number.";
     private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_NUMBER;
 
+    private static final String COMMAND_SORT_NAME = "sort name";
+    private static final String COMMAND_SORTNAME_DESC = "Sort people based on name.";
+    private static final String COMMAND_SORTNAME_EXAMPLE = COMMAND_SORT_NAME;
+
     private static final String COMMAND_EXIT_WORD = "exit";
     private static final String COMMAND_EXIT_DESC = "Exits the program.";
     private static final String COMMAND_EXIT_EXAMPLE = COMMAND_EXIT_WORD;
@@ -386,6 +390,8 @@ public class AddressBook {
                 return executeClearAddressBook();
             case COMMAND_HELP_WORD:
                 return getUsageInfoForAllCommands();
+            case COMMAND_SORT_NAME:
+                return sortPersonBasedOnName();
             case COMMAND_SORT_NUMBER:
                 return sortPersonBasedOnNumber();
             case COMMAND_EXIT_WORD:
@@ -796,6 +802,22 @@ public class AddressBook {
         return executeListAllPersonsInAddressBook();
     }
 
+    private static String sortPersonBasedOnName(){
+        for (int i=0; i<ALL_PERSONS.size(); i++){
+            for (int j=0; j<ALL_PERSONS.size() - 1; j++){
+                String name1 = getNameFromPerson(ALL_PERSONS.get(j));
+                String name2 = getNameFromPerson(ALL_PERSONS.get(j+1));
+                if (name1.compareTo(name2) == 1){
+                    String[] bigname = ALL_PERSONS.get(j);
+                    String[] smallname = ALL_PERSONS.get(j+1);
+                    ALL_PERSONS.set(j,smallname);
+                    ALL_PERSONS.set(j+1,bigname);
+                }
+            }
+        }
+        return executeListAllPersonsInAddressBook();
+    }
+
     /*
      * ================================================================================
      *        INTERNAL ADDRESS BOOK DATA METHODS
@@ -1116,6 +1138,7 @@ public class AddressBook {
                 + getUsageInfoForClearCommand() + LS
                 + getUsageInfoForExitCommand() + LS
                 + getUsageInfoForSortNumCommand() + LS
+                + getUsageInfoForSortNameCommand() + LS
                 + getUsageInfoForHelpCommand();
     }
 
@@ -1162,6 +1185,12 @@ public class AddressBook {
     private static String getUsageInfoForSortNumCommand() {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_SORT_NUMBER, COMMAND_SORT_DESC)
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_SORT_EXAMPLE);
+    }
+
+    /** Returns string for showing 'sortname' command usage instruction */
+    private static String getUsageInfoForSortNameCommand() {
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_SORT_NAME, COMMAND_SORTNAME_DESC)
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_SORTNAME_EXAMPLE);
     }
 
     /** Returns the string for showing 'exit' command usage instruction */
