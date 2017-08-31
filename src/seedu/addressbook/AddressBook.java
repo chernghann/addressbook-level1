@@ -784,6 +784,21 @@ public class AddressBook {
         }
     }
 
+    /*
+     * Sorting method based on the Number of person
+     */
+    private static void sortPersonBasedOnNumber(ArrayList<String[]> ALL_PERSONS){
+        for (int i= 0; i< ALL_PERSONS.length; i++){
+            for (int j=0 ; j< ALL_PERSONS.length - 1; j++){
+                if (Integer.getPhoneFromPerson(ALL_PERSONS.get(j)) > Integer.getPhoneFromPerson(ALL_PERSONS.get(j+1))){
+                    String[] biggerNumber = ALL_PERSONS.get(j);
+                    String[] smallerNumber = ALL_PERSONS.get(j+1);
+                    ALL_PERSONS.set(j,smallerNumber);
+                    ALL_PERSONS.set(j+1,largerNumber);
+                }
+            }
+        }
+    }
 
     /*
      * ================================================================================
@@ -835,7 +850,7 @@ public class AddressBook {
      *
      * @param persons list of persons to initialise the model with
      */
-    private static void initialiseAddressBookModel(ArrayList<String[]> persons) {
+    private static void initialiseAddressBookModel(Arr1ayList<String[]> persons) {
         ALL_PERSONS.clear();
         ALL_PERSONS.addAll(persons);
     }
