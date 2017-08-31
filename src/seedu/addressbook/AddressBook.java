@@ -1061,15 +1061,7 @@ public class AddressBook {
                 && isPersonPhoneValid(person[PERSON_DATA_INDEX_PHONE])
                 && isPersonEmailValid(person[PERSON_DATA_INDEX_EMAIL]);
     }
-
-    /* To show user that given person's data field are invalid
-     * Display a short message to inform user
-     */
-    private static void displayValidity(String[] person) {
-        if (!isPersonDataValid(person)) {
-            showToUser(MESSAGE_PERSON_DETAILS_INVALID);
-        }
-    }
+    
 
     /*
      * NOTE : =============================================================
@@ -1124,6 +1116,7 @@ public class AddressBook {
                 + getUsageInfoForDeleteCommand() + LS
                 + getUsageInfoForClearCommand() + LS
                 + getUsageInfoForExitCommand() + LS
+                + getUsageInfoForSortNumCommand() + LS
                 + getUsageInfoForHelpCommand();
     }
 
@@ -1164,6 +1157,12 @@ public class AddressBook {
     private static String getUsageInfoForHelpCommand() {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_HELP_WORD, COMMAND_HELP_DESC)
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_HELP_EXAMPLE);
+    }
+
+    /** Returns string for showing 'sort' command usage instruction */
+    private static String getUsageInfoForSortNumCommand() {
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_SORT_NUMBER, COMMAND_SORT_DESC)
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_SORT_EXAMPLE);
     }
 
     /** Returns the string for showing 'exit' command usage instruction */
